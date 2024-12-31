@@ -1,0 +1,9 @@
+<form [formGroup]="stockPieceForm">
+  <input type="number" formControlName=width" placeholder="width">
+  <input type="number" formControlName="height" placeholder="height">
+  <select formControlName="patternDirection">
+    <option value="None">None</option>
+    <option value="ParallelToWidth">Parallel to Width</option>
+    <option value="ParallelToHeight">Parallel to Height</option>
+  </select>
+</form>

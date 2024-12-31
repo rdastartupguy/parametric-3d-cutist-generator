@@ -1,0 +1,103 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div style="text-align:center;">
+        <button type="submit" [disabled]="!form.valid" *ngIf="!optimizing" class="button button-large center">Optimize</button>
+        <div (click)="cancel()" *ngIf="optimizing" id="button-cancel" class="button button-large center">Cancel</div>
+    </div>
+
+    <br>
+
+    <table>
+        <tbody>
+            <td>
+                <label for="optimizeMethod">Method</label>
+                <select id="optimizeMethod" formControlName="optimizeMethod">
+          <option value="guillotine">Guillotine</option>
+          <option value="nested">Nested</option>
+        </select>
+            </td>
+            <td>
+                <label for="cutWidth">Cut Width</label>
+                <input id="cutWidth" type="number" formControlName="cutWidth" placeholder="cut width" style="width: 8em">
+            </td>
+        </tbody>
+    </table>
+
+    <div formArrayName="stockPieces">
+        <table>
+            
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Pattern Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stockPiece of stockPieceFormArray.controls; let i=index" [formGroupName]="i">
+                    <td><input type="checkbox" formControlName="enabled"></td>
+                    <td><input type="number" formControlName="width" placeholder="width"></td>
+                    <td><input type="number" formControlName="length" placeholder="length"></td>
+                    <td>
+                        <select formControlName="patternDirection">
+              <option value="None">None</option>
+              <option value="ParallelToWidth">Parallel to Width</option>
+              <option value="ParallelToLength">Parallel to Length</option>
+            </select>
+                    </td>
+                    <td>
+                        <input type="button" value="&times;" (click)="removeStockPiece(i)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <input type="button" value="Add Sheet" (click)="newStockPiece()" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div formArrayName="cutPieces">
+        <table>
+            <caption>
+                <h3>Cut Pieces</h3>
+            </caption>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Quantity</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Pattern Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cutPiece of cutPieceFormArray.controls; let i=index" [formGroupName]="i">
+                    <td><input type="checkbox" formControlName="enabled"></td>
+                    <td><input type="number" formControlName="quantity" placeholder="quantity"></td>
+                    <td><input type="number" formControlName="width" placeholder="width"></td>
+                    <td><input type="number" formControlName="length" placeholder="length"></td>
+                    <td>
+                        <select formControlName="patternDirection">
+              <option value="None">None</option>
+              <option value="ParallelToWidth">Parallel to Width</option>
+              <option value="ParallelToLength">Parallel to Length</option>
+            </select>
+                    </td>
+                    <td>
+                        <input type="button" value="&times;" (click)="removeCutPiece(i)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <input type="button" value="Add Cut Piece" (click)="newCutPiece()" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</form>

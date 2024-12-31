@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <button class="btn btn-primary" id="exportCutlistpdf" (click)="downloadAsPDF()" style="float:right;">Export as PDF</button>
+</div>
+<div id="mainContainer" #pdfPageView>
+
+    <div id="editorSideBar" class="expanded" style="display: none;">
+        <app-editor (optimizeStart)="onOptimizeStart()" (optimizeProgress)="onOptimizeProgress($event)" (optimizeFinish)="onOptimizeFinish($event)" (optimizeError)="onOptimizeError($event)">
+        </app-editor>
+    </div>
+    <div id="resultSide" style="margin-left:0;width:1000px">
+
+        <div id="optimizing" *ngIf="optimizing">
+            <h4>Searching for optimize Best Solution...</h4>
+            <div id="progress">
+                <div id="progressBar" [style.width]="progress + '%'"></div>
+                <span id="progressText">{{ progress }}%</span>
+            </div>
+        </div>
+        <app-results [results]="optimizerResults" *ngIf="optimizerResults !== null">
+        </app-results>
+    </div>
+    <div id="RightSideBar" *ngIf="optimizerResults !== null">
+        <div *ngFor="let result of optimizerResults.stockPieces; let i = index">
+            <h4 style="font-size: x-large;">Sheet statistics - {{ i+1 }}</h4><br><br>
+            <ul class="sheetstockinfo">
+                <li><b>Total Plank Size :</b> {{result.width}} X {{result.length}}</li>
+                <li><b>Used area : </b> {{(100-wasteCalculation(result.wastePieces,result.width,result.length)).toFixed(2)}} %</li>
+                <li><b>Wasted area : </b> {{wasteCalculation(result.wastePieces,result.width,result.length)}} %</li>
+                <li><b>Cuts : </b> {{result.wastePieces.length + result.cutPieces.length}}</li>
+                <li><b>Panels : </b> {{result.cutPieces.length}}</li>
+                <li><b>Wasted panels : </b> {{result.wastePieces.length}}</li>
+
+            </ul>
+        </div>
+        <h4 style="font-size: x-large;">Cut Pieces</h4>
+        <div>
+            <table>
+                <tr>
+                    <td>Type</td>
+                    <td>Length</td>
+                    <td>Width</td>
+                    
+                    
+                </tr>
+                <tr *ngFor="let stock of Stocks">
+                    <td><b>{{ stock.label }}</b></td>
+                    <td>{{ stock.length }} mm</td>
+                    <td>{{ stock.width }} mm</td>
+                   
+                   
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<router-outlet></router-outlet>

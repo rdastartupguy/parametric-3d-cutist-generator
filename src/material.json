@@ -1,0 +1,36 @@
+{
+    "material": [
+        {
+            "id": "plywood",
+            "name": "Plywood",
+            "thumbnail": "./material/Wood_Plywood_Front_001_SD/thumbnail.jpg",
+            "colormap": "./material/Wood_Plywood_Front_001_SD/Wood_Plywood_Front_001_basecolor.jpg",
+            "normalmap": "./material/Wood_Plywood_Front_001_SD/Wood_Plywood_Front_001_normal.jpg",
+            "roughnessmap": "./material/Wood_Plywood_Front_001_SD/Wood_Plywood_Front_001_roughness.jpg",
+            "ambientmap": "./material/Wood_Plywood_Front_001_SD/Wood_Plywood_Front_001_ambientOcclusion.jpg",
+            "displacementmap": "./material/Wood_Plywood_Front_001_SD/Wood_Plywood_Front_001_height.png",
+            "repeat": 20
+        },
+        {
+            "id": "wood_0015_1k_66DfC8",
+            "name": "wood_0015_1k_66DfC8",
+            "thumbnail": "./material/wood_0015_1k_66DfC8/thumbnail.jpg",
+            "colormap": "./material/wood_0015_1k_66DfC8/wood_0015_color_1k.jpg",
+            "normalmap": "./material/wood_0015_1k_66DfC8/wood_0015_normal_directx_1k.png",
+            "roughnessmap": "./material/wood_0015_1k_66DfC8/wood_0015_roughness_1k.jpg",
+            "ambientmap": "./material/wood_0015_1k_66DfC8/wood_0015_ao_1k.jpg",
+            "displacementmap": "./material/wood_0015_1k_66DfC8/wood_0015_height_1k.png",
+            "repeat": 20
+        },
+        {
+            "name": "Cementbrick_wall",
+            "id": "Cementbrick_wall",
+            "repeat": 20,
+            "colormap": "./material/Cementbrick/cementbrick_basecolor.png",
+            "normalmap": "./material/Cementbrick/cementbrick_normal.png",
+            "ambientmap": "./material/Cementbrick/cementbrick_ambientocclusion.png",
+            "roughnessmap": "./material/Cementbrick/cementbrick_roughness.png",
+            "metalnessMap": "./material/Cementbrick/cementbrick_metallic.png"
+        }
+    ]
+}
