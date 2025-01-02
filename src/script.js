@@ -31,6 +31,15 @@ let thickness = {
 
 
 
+/**
+ * Object representing a group size with width, height, and depth properties.
+ * Contains a method to generate cut pieces based on the group size.
+ * @type {Object}
+ * @property {number} group_width - The width of the group.
+ * @property {number} group_height - The height of the group.
+ * @property {number} group_depth - The depth of the group.
+ * @method generate - Generates cut pieces based on the group size and opens a new window with the cut list.
+ */
 let groupsize = {
   group_width: 1000, // mm
   group_height: 300, // mm
@@ -83,6 +92,13 @@ topTableMesh = new ParametricMesh();
 
 // https://stackoverflow.com/questions/66257241/how-to-create-shelf-with-rounded-corner-in-three-js
 // https://threejs.org/docs/#api/en/extras/core/Path.absarc
+/**
+ * Generates a rounded shape with the specified width, height, and radius using the THREE.js library.
+ * @param {number} width - The width of the shape.
+ * @param {number} height - The height of the shape.
+ * @param {number} radius - The radius of the rounded corners.
+ * @returns {THREE.Shape} A THREE.js shape representing the rounded shape.
+ */
 function generateroundedshape(width, height, radius) {
   let shape = new THREE.Shape();
   let halfX = width * 0.5 - radius;
@@ -122,16 +138,16 @@ let extrudeSettings = {
 
 
 
-const hole = new THREE.Path();
-hole.moveTo(5, 5);
-hole.lineTo(5, 20);
-hole.lineTo(20, 20);
-hole.lineTo(20, 5);
-hole.lineTo(5, 5);
-
-
-
-
+/**
+ * Creates a 3D extruded geometry for a top panel using the provided shape and extrude settings.
+ * Computes vertex normals for the geometry and assigns it to the topTableMesh.
+ * Sets the material, name, and adds a box helper to the topTableMesh for visualization.
+ * Sets the position and rotation of the topTableMesh.
+ * @param {THREE.Shape} topshape - The shape to extrude for the top panel.
+ * @param {THREE.ExtrudeGeometrySettings} extrudeSettings - The settings for extruding the shape.
+ * @param {THREE.Mesh} topTableMesh - The mesh representing the top panel.
+ * @param {THREE.Material} panelMaterial - The material to apply
+ */
 topgeometry = new THREE.ExtrudeGeometry(topshape, extrudeSettings);
 
 topgeometry.computeVertexNormals();
@@ -153,6 +169,10 @@ topTableMesh.rotation.set(-1.57, 0, 0);
 
 
 /* Left Panel Mesh */
+/**
+ * Creates a left table mesh with specified dimensions and materials.
+ * @returns None
+ */
 leftTableMesh = new ParametricMesh();
 
 let leftgeometry = new THREE.BoxGeometry(
@@ -176,6 +196,10 @@ leftTableMesh.boxhelper = leftTableMeshbox;
 
 /* Right Panel Mesh */
 
+/**
+ * Creates a right table mesh with specified dimensions and materials.
+ * @returns None
+ */
 rightTableMesh = new ParametricMesh();
 let rightgeometry = new THREE.BoxGeometry(
   convertDimention.width * 0.5,
@@ -202,16 +226,36 @@ rightTableMesh.position.z = 0;
 let vertexs = [];
 
 /* add Mesh to parametricGroup */
+/**
+ * Add the specified meshes to the parametric group.
+ * @param {Mesh} topTableMesh - The mesh to add to the parametric group for the top table.
+ * @param {Mesh} bottomTableMesh - The mesh to add to the parametric group for the bottom table.
+ * @param {Mesh} leftTableMesh - The mesh to add to the parametric group for the left table.
+ * @param {Mesh} rightTableMesh - The mesh to add to the parametric group for the right table.
+ * @returns None
+ */
 parametricgroup.add(topTableMesh);
 parametricgroup.add(bottomTableMesh);
 parametricgroup.add(leftTableMesh);
 parametricgroup.add(rightTableMesh);
 
+/**
+ * Add the specified mesh objects to the list of pickable objects.
+ * @param {Mesh} topTableMesh - The mesh object representing the top table.
+ * @param {Mesh} bottomTableMesh - The mesh object representing the bottom table.
+ * @param {Mesh} leftTableMesh - The mesh object representing the left table.
+ * @param {Mesh} rightTableMesh - The mesh object representing the right table.
+ * @returns None
+ */
 pickableObjects.push(topTableMesh);
 pickableObjects.push(bottomTableMesh);
 pickableObjects.push(leftTableMesh);
 pickableObjects.push(rightTableMesh);
 
+/**
+ * Set the y position of the parametric group to half the negative height of the converted dimension
+ * and add the parametric group to the scene.
+ */
 parametricgroup.position.y = -convertDimention.height * 0.5;
 scene.add(parametricgroup);
 
@@ -232,6 +276,13 @@ const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.5);
 dirLight1.position.set(100, 50, -80);
 scene.add(dirLight1);
 
+/**
+ * Creates a folder in the GUI interface for controlling table resize options.
+ * Allows the user to customize the width, height, and depth of the table.
+ * Also provides an option to generate a cutlist for the table.
+ * @param {string} "Table Resize Controls" - The name of the folder in the GUI.
+ * @returns None
+ */
 const customizableFolder = gui.addFolder("Table Resize Controls");
 
 customizableFolder
@@ -266,6 +317,12 @@ customizableFolder.open();
 
 
 
+/**
+ * Resize the panel table based on the provided dimensions and settings.
+ * This function calculates the dimensions of the panel table, generates the shapes,
+ * and positions the table mesh accordingly.
+ * @returns None
+ */
 function resizePanelTable() {
   convertDimention = {
     width : groupsize.group_width * mmtocm,
@@ -350,6 +407,14 @@ window.addEventListener("resize", () => {
  * Camera
  */
 // Base camera
+/**
+ * Creates a new PerspectiveCamera object with the specified parameters and adds it to the scene.
+ * @param {number} 35 - The field of view in degrees.
+ * @param {number} sizes.width / sizes.height - The aspect ratio.
+ * @param {number} 1 - The near clipping plane.
+ * @param {number} 100000 - The far clipping plane.
+ * @returns None
+ */
 const camera = new THREE.PerspectiveCamera(
   35,
   sizes.width / sizes.height,
@@ -364,6 +429,13 @@ scene.add(camera);
 
 
 //Controls
+/**
+ * Initializes a new instance of OrbitControls with the given camera and canvas,
+ * and sets various properties for controlling the camera movement.
+ * @param {THREE.Camera} camera - The camera to be controlled.
+ * @param {HTMLCanvasElement} canvas - The canvas element for interaction.
+ * @returns None
+ */
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.maxPolarAngle = Math.PI;
@@ -390,6 +462,11 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+/**
+ * Loads an HDR environment map and sets it as the scene's environment.
+ * @param {string} path - The path to the HDR environment map file.
+ * @returns None
+ */
 function hdrimapLoader(path) {
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
   pmremGenerator.compileCubemapShader();
