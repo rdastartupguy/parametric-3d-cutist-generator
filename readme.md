@@ -2,7 +2,7 @@
 We have a very simple coffee table 3D model that can be parametrically adjusted to any dimension as preferred by the user. They can then click on the “Generate Cutlist” button which will then identify pieces to be cut and present them on a standard plywood sheet.
 
 ## Demo
-Coming soon
+https://demo.craftpixels.in/3d-cutlist-optimizer/
 
 ## Commercial Development:
 Commercial implementation or further development based on varied use cases is possible. Please contact connect@craftpixels.in  
